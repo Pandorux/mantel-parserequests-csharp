@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParseRequests.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,10 @@ namespace ParseRequests.Helpers
     {
         // Regex expression for validating IP
         public static readonly Regex IP_REGEX = new Regex("([0-9]{1,3}\\.|\\*\\.){3}([0-9]{1,3}|\\*){1}");
+
+        public static bool IsHTTPRequestStringParseable(string s)
+        {
+            return HTTPRequestParsingHelper.IP_REGEX.IsMatch(s);
+        }
     }
 }

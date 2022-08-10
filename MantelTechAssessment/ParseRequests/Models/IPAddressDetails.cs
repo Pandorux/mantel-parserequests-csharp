@@ -9,12 +9,11 @@ namespace ParseRequests.Models
     public class IPAddressDetails
     {
         public readonly string IPAddress;
-        public string parsedLine { get; private set; }
+        public List<string> parsedLines = new List<string>();
 
-        public IPAddressDetails(string IPAddress, string parsedLine)
+        public IPAddressDetails(string IPAddress)
         {
             this.IPAddress = IPAddress;
-            this.parsedLine = parsedLine;
         }
     }
 }
