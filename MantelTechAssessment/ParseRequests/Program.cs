@@ -4,49 +4,27 @@ using ParseRequests.Helpers;
 using ParseRequests.Models;
 using ParseRequests.Repositories;
 
+// Import and Parse File
+const string fileName = "programming-task-example-data_(1).log";
+List<string> lines = File.ReadAllLines("../../../" + fileName).ToList();
+HTTPRequestParsingHelper.ParseHTTPRequestStrings(lines.ToArray());
+
+// Run Console Program
 Console.WriteLine(@"
-    Hello, This is the Mantel Tech Assessment!
+Hello, This is the Mantel Tech Assessment completed by Jared Carey on 11/08/22!
     
-    The purpose of this Tech Assessment will be to parse HTTP Requests and list details the aforementioned HTTP Requests. \n\n
+The purpose of this Tech Assessment will be to parse HTTP Requests and list details of the aforementioned HTTP Requests. The required details about the HTTP Requests can be found below.
 ");
 
+Console.WriteLine($"Total Unique IP Addresses: {IPAddressRepository.TotalUniqueIPAddresses}");
 
-const string fileName = "programming-task-example-data_(1).log";
+Console.WriteLine($"\nMost Active IP Addresses:\n");
+IPAddressRepository.GetMostActiveIPAddresses(3).ForEach(ip => Console.WriteLine($"- {ip.IPAddress}"));
 
-List<string> lines = File.ReadAllLines("../../../" + fileName).ToList();
-lines.ForEach(l => Console.WriteLine(l));
-
-
-lines.ForEach(l =>
-{
-    if (HTTPRequestParsingHelper.IsHTTPRequestStringParseable(l))
-    {
-        string result = HTTPRequestParsingHelper.IP_REGEX.Match(l).Value;
-
-        if (IPAddressRepository.IPAddresses.ContainsKey(result))
-        {
-            IPAddressRepository.IPAddresses[result].parsedLines.Add(l);
-        }
-        else
-        {
-            IPAddressRepository.IPAddresses.Add(result, new IPAddressDetails(result));
-        }
-
-        string date = HTTPRequestParsingHelper.DATE_REGEX.Match(l).Value;
-        string header = HTTPRequestParsingHelper.GETREQUEST_REGEX.Match(l).Value;
-
-        HTTPRequestDetails req = new HTTPRequestDetails(header, HTTPRequestParsingHelper.ParseHTTPRequestStringDateTime(date));
-        IPAddressRepository.IPAddresses[result].Requests.Add(req);
-    }
-    else
-    {
-        throw new Exception("IP Not Valid");
-    }
-});
-
-IPAddressRepository.IPAddresses.ToList().ForEach(l => Console.WriteLine(l));
-Console.WriteLine($"There are {IPAddressRepository.IPAddresses.Count} IP Addresses Provided");
+Console.WriteLine($"\nMost Active Websites:");
+// TODO: Website Listings
 
 Console.WriteLine(@"
 
-    And that is the entire file logged above");
+And thats it to this tech assessment!");
+Console.ReadLine();

@@ -1,4 +1,5 @@
 ﻿using ParseRequests.Models;
+using ParseRequests.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,12 +16,44 @@ namespace ParseRequests.Helpers
         public static readonly Regex DATE_REGEX = new Regex("(\\d{2}\\/[a-zA-Z0-9].*/\\d{2,4}.*\\+[0-9]{4}){1}");
         public static readonly Regex GETREQUEST_REGEX = new Regex("(GET.*HTTP/1.1){1}");
 
-        private static int DAY_DATECOMPONENT = 1;
-        private static int MONTH_DATECOMPONENT = 2;
-        private static int YEAR_DATECOMPONENT = 3;
-        private static int HOUR_DATECOMPONENT = 4;
-        private static int MINUTE_DATECOMPONENT = 5;
-        private static int SECOND_DATECOMPONENT = 6;
+        private static int DAY_DATECOMPONENT = 0;
+        private static int MONTH_DATECOMPONENT = 1;
+        private static int YEAR_DATECOMPONENT = 2;
+        private static int HOUR_DATECOMPONENT = 3;
+        private static int MINUTE_DATECOMPONENT = 4;
+        private static int SECOND_DATECOMPONENT = 5;
+
+        public static void ParseHTTPRequestStrings(string[] strings)
+        {
+            strings.ToList().ForEach(s => HTTPRequestParsingHelper.ParseHTTPRequestString(s));
+        }
+
+        public static void ParseHTTPRequestString(string s)
+        {
+            if (HTTPRequestParsingHelper.IsHTTPRequestStringParseable(s))
+            {
+                string result = HTTPRequestParsingHelper.IP_REGEX.Match(s).Value;
+
+                if (IPAddressRepository.IPAddresses.ContainsKey(result))
+                {
+                    IPAddressRepository.IPAddresses[result].parsedLines.Add(s);
+                }
+                else
+                {
+                    IPAddressRepository.IPAddresses.Add(result, new IPAddressDetails(result));
+                }
+
+                string date = HTTPRequestParsingHelper.DATE_REGEX.Match(s).Value;
+                string header = HTTPRequestParsingHelper.GETREQUEST_REGEX.Match(s).Value;
+
+                HTTPRequestDetails req = new HTTPRequestDetails(header, HTTPRequestParsingHelper.ParseHTTPRequestStringDateTime(date));
+                IPAddressRepository.IPAddresses[result].Requests.Add(req);
+            }
+            else
+            {
+                throw new Exception("IP Not Valid");
+            }
+        }
 
         public static bool IsHTTPRequestStringParseable(string s)
         {
