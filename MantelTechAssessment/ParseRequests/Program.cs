@@ -31,6 +31,12 @@ lines.ForEach(l =>
         {
             IPAddressRepository.IPAddresses.Add(result, new IPAddressDetails(result));
         }
+
+        string date = HTTPRequestParsingHelper.DATE_REGEX.Match(l).Value;
+        string header = HTTPRequestParsingHelper.GETREQUEST_REGEX.Match(l).Value;
+
+        HTTPRequestDetails req = new HTTPRequestDetails(header, HTTPRequestParsingHelper.ParseHTTPRequestStringDateTime(date));
+        IPAddressRepository.IPAddresses[result].Requests.Add(req);
     }
     else
     {

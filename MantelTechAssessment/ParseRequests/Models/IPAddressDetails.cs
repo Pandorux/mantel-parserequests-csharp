@@ -10,6 +10,7 @@ namespace ParseRequests.Models
     {
         public readonly string IPAddress;
         public List<string> parsedLines = new List<string>();
+        public List<HTTPRequestDetails> Requests = new List<HTTPRequestDetails>();
 
         public IPAddressDetails(string IPAddress)
         {

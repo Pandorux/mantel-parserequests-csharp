@@ -11,7 +11,7 @@ namespace ParseRequests.Models
         public readonly string HTTPRequest;
         public DateTime TimeOfRequest { get; private set; }
 
-        HTTPRequestDetails(string HTTPRequest, DateTime TimeOfRequest)
+        public HTTPRequestDetails(string HTTPRequest, DateTime TimeOfRequest)
         {
             this.HTTPRequest = HTTPRequest;
             this.TimeOfRequest = TimeOfRequest;
