@@ -18,6 +18,11 @@ namespace ParseRequests.Helpers
         public static readonly Regex DATE_REGEX = new Regex("(\\d{2}\\/[a-zA-Z0-9].*/\\d{2,4}.*\\+[0-9]{4}){1}");
         public static readonly Regex GETREQUEST_REGEX = new Regex("(GET.*HTTP/1.1){1}");
 
+        public static readonly Regex URL_REGEX = new Regex("(http|https)://[A-Za-z0-9.]+[^/]");
+        public static readonly Regex URL_FULLYQUALIFIED_REGEX = new Regex("(http|https)://[.*][^/]([^ ]+)");
+        public static readonly Regex URLRESOURCE_REGEX = new Regex("/ |(?<=[^://])/[^/]([^ ]+)");
+        public static readonly Regex URL_AND_URLRESOURCE_REGEX = new Regex("(http|https)://[^/]([^ ]+)|(?<=[^://])/[^/]([^ ]+)");
+
         private static int DAY_DATECOMPONENT = 0;
         private static int MONTH_DATECOMPONENT = 1;
         private static int YEAR_DATECOMPONENT = 2;
@@ -85,6 +90,16 @@ namespace ParseRequests.Helpers
             {
                 throw new InvalidCastException();
             }
+        }
+
+        public static string ParseHTTPRequestStringRequestURL(string s)
+        {
+            // NOTE:    This originally tried to get each subpart of URL. 
+            //          Due to time constraints this has been simplified.
+
+            string requestUrl = HTTPRequestParsingHelper.URL_AND_URLRESOURCE_REGEX.Match(s).Value;
+
+            return requestUrl;
         }
     }
 }

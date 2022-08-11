@@ -9,7 +9,7 @@ const string fileName = "programming-task-example-data_(1).log";
 List<string> lines = File.ReadAllLines(HTTPRequestParsingHelper.LOG_FOLDER_PATH + fileName).ToList();
 HTTPRequestParsingHelper.ParseHTTPRequestStrings(lines.ToArray());
 
-// Run Console Program
+//// Run Console Program
 Console.WriteLine(@"
 Hello, This is the Mantel Tech Assessment completed by Jared Carey on 11/08/22!
     
@@ -22,9 +22,13 @@ Console.WriteLine($"\nMost Active IP Addresses:\n");
 IPAddressRepository.GetMostActiveIPAddresses(3).ForEach(ip => Console.WriteLine($"- {ip.IPAddress}"));
 
 Console.WriteLine($"\nMost Active Websites:");
-// TODO: Website Listings
+HTTPRequestDetails.RequestURLAccessCounts.ToList().OrderByDescending(url => url.Value)
+    .Take(3)
+    .ToList()
+    .ForEach(url => Console.WriteLine($"- {url.Key} has been accessed {url.Value} times"));
 
 Console.WriteLine(@"
 
 And thats it to this tech assessment!");
+
 Console.ReadLine();
