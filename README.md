@@ -1,3 +1,34 @@
+# Completed Tech Assessment Notes
+
+- Completed
+    - Parsing of 
+        - Get Request
+        - IP Address
+        - URL
+        - URL Resources
+        - DateTime
+    - Prints Information Log
+        - Most Active IP Addresses
+        - Total Unique IP Addresses
+        - Most Visted Websites - Simplified Implmentation due to Time Constraints
+    - Implementation of
+        - Models
+        - Helper Class
+        - Repository for Data
+
+- Duration
+    - I spent 4 hours on the challenge
+    - The URL Parsing ended up being a time sink, and I ultimately decided to do a simply implementation to submit on time
+
+- Improvements
+    - Unit Tests (I should have done them as I went tbh)
+        - I was intending on using NUnit for this
+    - Refine URL Parsing - Split Methods were not playing nice and ended up wasting a lot of time
+        - When googling about how to best approach the URL Parsing I found mostly results that specified that Regex was the best approach
+        - Original Implementation would count each instance of the
+            - Domain
+            - Subroute
+
 # Programming Task Overview
 
 The goal of this task is to create a solution we can use to have a conversation about your
