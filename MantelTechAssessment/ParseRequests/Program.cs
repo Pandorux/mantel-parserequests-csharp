@@ -6,7 +6,7 @@ using ParseRequests.Repositories;
 
 // Import and Parse File
 const string fileName = "programming-task-example-data_(1).log";
-List<string> lines = File.ReadAllLines("../../../" + fileName).ToList();
+List<string> lines = File.ReadAllLines(HTTPRequestParsingHelper.LOG_FOLDER_PATH + fileName).ToList();
 HTTPRequestParsingHelper.ParseHTTPRequestStrings(lines.ToArray());
 
 // Run Console Program

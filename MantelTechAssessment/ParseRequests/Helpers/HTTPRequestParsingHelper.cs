@@ -12,6 +12,8 @@ namespace ParseRequests.Helpers
 {
     static class HTTPRequestParsingHelper
     {
+        public static readonly string LOG_FOLDER_PATH = "../../../Logs/";
+
         public static readonly Regex IP_REGEX = new Regex("([0-9]{1,3}\\.|\\*\\.){3}([0-9]{1,3}|\\*){1}");
         public static readonly Regex DATE_REGEX = new Regex("(\\d{2}\\/[a-zA-Z0-9].*/\\d{2,4}.*\\+[0-9]{4}){1}");
         public static readonly Regex GETREQUEST_REGEX = new Regex("(GET.*HTTP/1.1){1}");
